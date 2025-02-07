@@ -1,27 +1,52 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>3GATAS</title>
+    <title>gatitas</title>
     <style>
-        img{
-            border-radius: 10%;
-            object-fit: contain;
-            aspect-ratio: 2;
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            background-color: black;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            font-family: Arial, sans-serif;
+            color: white;
+        }
+        #contenedor {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+        }
+        img {
+            position: absolute;
+            width: 100px;
+            height: auto;
+            cursor: pointer;
         }
     </style>
 </head>
 <body>
-    <h1>Jade</h1>
-    <p>maya y gatitarecienrescatada</p>
-    <img src="gatitas.jpg" id="miau" width="400px">
+
+    <div id="contenedor">
+        <img id="imagen" src="gatitas.jpg" alt="Imagen rápida">
+    </div>
+
     <script>
-        let img = document.getElementById("miau");
+        let img = document.getElementById("imagen");
         let x = 0, y = 0;
-        let speed = 20; // Ajusta la velocidad aquí (más alto = más rápido)
+        let speed = 50;
         let directionX = 1, directionY = 1;
         let maxX, maxY;
+        let running = true;
+        let animationFrame;
 
         function actualizarLimites() {
             maxX = window.innerWidth - img.clientWidth;
@@ -29,6 +54,8 @@
         }
 
         function moverImagen() {
+            if (!running) return;
+
             x += speed * directionX;
             y += speed * directionY;
 
@@ -37,8 +64,14 @@
 
             img.style.transform = `translate(${x}px, ${y}px)`;
 
-            requestAnimationFrame(moverImagen);
+            animationFrame = requestAnimationFrame(moverImagen);
         }
+
+        img.addEventListener("pointerdown", () => {
+            running = !running; // Alterna entre moverse y detenerse
+            if (running) moverImagen(); // Si está en marcha, sigue moviéndose
+            else cancelAnimationFrame(animationFrame); // Si se pausa, cancela la animación
+        });
 
         window.onload = () => {
             actualizarLimites();
@@ -47,5 +80,6 @@
 
         window.onresize = actualizarLimites;
     </script>
+
 </body>
 </html>

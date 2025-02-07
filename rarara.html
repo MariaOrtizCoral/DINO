@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3GATAS</title>
+    <style>
+        img{
+            border-radius: 10%;
+            object-fit: contain;
+            aspect-ratio: 2;
+        }
+    </style>
+</head>
+<body>
+    <h1>Jade</h1>
+    <p>maya y gatitarecienrescatada</p>
+    <img src="gatitas.jpg" id="miau" width="400px">
+    <script>
+        let img = document.getElementById("miau");
+        let x = 0, y = 0;
+        let speed = 20; // Ajusta la velocidad aquí (más alto = más rápido)
+        let directionX = 1, directionY = 1;
+        let maxX, maxY;
+
+        function actualizarLimites() {
+            maxX = window.innerWidth - img.clientWidth;
+            maxY = window.innerHeight - img.clientHeight;
+        }
+
+        function moverImagen() {
+            x += speed * directionX;
+            y += speed * directionY;
+
+            if (x >= maxX || x <= 0) directionX *= -1;
+            if (y >= maxY || y <= 0) directionY *= -1;
+
+            img.style.transform = `translate(${x}px, ${y}px)`;
+
+            requestAnimationFrame(moverImagen);
+        }
+
+        window.onload = () => {
+            actualizarLimites();
+            moverImagen();
+        };
+
+        window.onresize = actualizarLimites;
+    </script>
+</body>
+</html>
